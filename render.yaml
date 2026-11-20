@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: cactuc-last-word-bot
+    runtime: python
+    plan: starter            # Persistent Disk فقط روی پلن‌های پولی Render وجود دارد
+    buildCommand: pip install -r requirements.txt
+    startCommand: python bot.py
+    healthCheckPath: /
+    envVars:
+      - key: BOT_TOKEN
+        sync: false           # مقدار را خودت در داشبورد Render وارد می‌کنی
+      - key: OWNER_ID
+        value: "8659480577"
+      - key: GROUP_CHAT_ID
+        sync: false
+      - key: DB_PATH
+        value: /var/data/last_word.db
+      - key: PYTHON_VERSION
+        value: 3.12.3
+    disk:
+      name: lastword-data
+      mountPath: /var/data
+      sizeGB: 1
